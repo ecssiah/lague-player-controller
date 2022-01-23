@@ -10,8 +10,12 @@ public class PlatformController : RaycastController
 		public bool standingOnPlatform;
 		public bool moveBeforePlatform;
 
-		public PassengerMovement(Transform _transform, Vector3 _velocity, bool _standingOnPlatform, bool _moveBeforePlatform)
-		{
+		public PassengerMovement(
+			Transform _transform, 
+			Vector3 _velocity, 
+			bool _standingOnPlatform, 
+			bool _moveBeforePlatform
+		) {
 			transform = _transform;
 			velocity = _velocity;
 			standingOnPlatform = _standingOnPlatform;
@@ -37,7 +41,7 @@ public class PlatformController : RaycastController
 
 	private List<PassengerMovement> passengerMovements;
 
-	private Dictionary<Transform, PlayerController> passengerDictionary = new Dictionary<Transform, PlayerController>();
+	private Dictionary<Transform, PlayerController> passengerDictionary;
 
     protected override void Start()
     {
@@ -49,6 +53,8 @@ public class PlatformController : RaycastController
 		{
 			globalWaypoints[i] = localWaypoints[i] + transform.position;
 		}
+
+		passengerDictionary = new Dictionary<Transform, PlayerController>();
     }
 
 	void Update()
@@ -85,7 +91,9 @@ public class PlatformController : RaycastController
 
 		int toWaypointIndex = (fromWaypointIndex + 1) % globalWaypoints.Length;
 
-		float distanceBetweenWaypoints = Vector3.Distance(globalWaypoints[fromWaypointIndex], globalWaypoints[toWaypointIndex]);
+		float distanceBetweenWaypoints = Vector3.Distance(
+			globalWaypoints[fromWaypointIndex], globalWaypoints[toWaypointIndex]
+		);
 
 		percentBetweenWaypoints += Time.deltaTime * speed / distanceBetweenWaypoints;
 
@@ -240,10 +248,7 @@ public class PlatformController : RaycastController
 						float pushY = velocity.y;
 
 						var passengerMovement = new PassengerMovement(
-							hit.transform,
-							new Vector3(pushX, pushY),
-							true,
-							false
+							hit.transform, new Vector3(pushX, pushY), true, false
 						);
 
 						passengerMovements.Add(passengerMovement);
@@ -264,8 +269,15 @@ public class PlatformController : RaycastController
 			{
 				Vector3 globalWaypointPosition = Application.isPlaying ? globalWaypoints[i] : localWaypoints[i] + transform.position;
 
-				Gizmos.DrawLine(globalWaypointPosition - Vector3.up * size, globalWaypointPosition + Vector3.up * size);
-				Gizmos.DrawLine(globalWaypointPosition - Vector3.left * size, globalWaypointPosition + Vector3.left * size);
+				Gizmos.DrawLine(
+					globalWaypointPosition - Vector3.up * size, 
+					globalWaypointPosition + Vector3.up * size
+				);
+
+				Gizmos.DrawLine(
+					globalWaypointPosition - Vector3.left * size, 
+					globalWaypointPosition + Vector3.left * size
+				);
 			}
 		}	
 	}

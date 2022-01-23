@@ -119,10 +119,12 @@ public class Player : MonoBehaviour
 		wallDirectionX = controller.collisionInfo.left ? -1 : 1;
 		wallSliding = false;
 
-		if ((controller.collisionInfo.left || controller.collisionInfo.right) && !controller.collisionInfo.bottom && velocity.y < 0)
+		bool sideCollison = controller.collisionInfo.left || controller.collisionInfo.right;
+
+		if (sideCollison && !controller.collisionInfo.bottom && velocity.y < 0)
 		{
 			wallSliding = true;
-
+				
 			if (velocity.y < -wallSlideSpeedMax)
 			{
 				velocity.y = -wallSlideSpeedMax;

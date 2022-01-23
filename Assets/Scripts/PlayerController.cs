@@ -188,7 +188,7 @@ public class PlayerController : RaycastController
 					{
 						collisionInfo.fallingThroughPlatform = true;
 
-						Invoke("ResetFallingThroughPlatform", 0.5f);
+						Invoke(nameof(ResetFallingThroughPlatform), 0.5f);
 
 						continue;
 					}
@@ -274,10 +274,10 @@ public class PlayerController : RaycastController
 					{
 						float moveDistance = Mathf.Abs(displacement.x);
 
-						float descenddisplacementY = Mathf.Sin(slopeAngle * Mathf.Deg2Rad) * moveDistance;
+						float descendDisplacementY = Mathf.Sin(slopeAngle * Mathf.Deg2Rad) * moveDistance;
 						
 						displacement.x = Mathf.Cos(slopeAngle * Mathf.Deg2Rad) * moveDistance * Mathf.Sign(displacement.x);
-						displacement.y -= descenddisplacementY;
+						displacement.y -= descendDisplacementY;
 
 						collisionInfo.currentSlopeAngle = slopeAngle;
 						collisionInfo.descendingSlope = true;
